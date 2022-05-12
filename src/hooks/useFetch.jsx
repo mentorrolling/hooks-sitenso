@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { getQuote } from "../../helpers/fetchQuote";
 
 const useFetch = (id) => {
-  const isMounted = useRef(true);
   const [state, setState] = useState({
     loading: true,
     datos: [],
@@ -23,13 +22,11 @@ const useFetch = (id) => {
 
     getQuote(id)
       .then((response) => {
-        if (isMounted) {
-          setState({
-            loading: false,
-            datos: response,
-            error: null,
-          });
-        }
+        setState({
+          loading: false,
+          datos: response,
+          error: null,
+        });
       })
       .catch((err) => setState({ ...state, error: err }));
   }, [id]);
