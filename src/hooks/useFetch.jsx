@@ -9,12 +9,6 @@ const useFetch = (id) => {
   });
 
   useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
     setState({
       ...state,
       loading: true,
