@@ -4,7 +4,9 @@ import ReactDOM from "react-dom/client";
 // import RefDom from "./components/01-useRef/RefDom";
 // import CasoUseRef from "./components/01-useRef/CasoUseRef";
 // import Memorize from "./components/02-memo/Memorize";
-import MemoHook from "./components/02-memo/MemoHook";
+// import MemoHook from "./components/02-memo/MemoHook";
+// import CallbackHook from "./components/02-memo/CallbackHook";
+import { Padre } from "./components/03-tarea-memo/Padre";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
@@ -17,6 +19,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     {/* <RefDom /> */}
     {/* <CasoUseRef /> */}
     {/* <Memorize /> */}
-    <MemoHook />
+    {/* <MemoHook /> */}
+    {/* <CallbackHook /> */}
+    <Padre />
   </React.StrictMode>
 );
