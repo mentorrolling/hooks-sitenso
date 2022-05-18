@@ -1,6 +1,8 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import useForm from "../../hooks/useForm";
 import { todoReducer } from "./todoReducer";
+
+import "./style.css";
 
 // const initialState = [
 //   {
@@ -9,19 +11,21 @@ import { todoReducer } from "./todoReducer";
 //     done: false,
 //   },
 // ];
-
 const init = () => {
+  console.log("me llame :(");
   return JSON.parse(localStorage.getItem("todos")) || [];
 };
 
 const TodoApp = () => {
   const [todos, dispatch] = useReducer(todoReducer, [], init);
+  const [pendientes, setPendientes] = useState(todos);
   const [{ description }, handleInputChange, reset] = useForm({
     description: "",
   });
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
+    setPendientes(todos.filter((todo) => todo.done === false));
   }, [todos]);
 
   const handleSubmit = (e) => {
@@ -51,12 +55,28 @@ const TodoApp = () => {
     dispatch(action);
   };
 
+  const handleToggle = (todoId) => {
+    dispatch({
+      type: "toggle",
+      payload: todoId,
+    });
+  };
+
   return (
     <div className="container">
       <div className="row mt-5">
         <div className="col">
-          <h1>TodoApp (1)</h1>
+          <h1>TodoApp </h1>
           <hr />
+          <p>
+            Total:
+            <span> ({todos.length}) </span>- Pendientes:{" "}
+            <span
+              className={pendientes.length > 0 ? "text-danger" : "text-success"}
+            >
+              ({pendientes.length})
+            </span>
+          </p>
         </div>
       </div>
       <div className="row">
@@ -64,7 +84,10 @@ const TodoApp = () => {
           {todos.map((todo, index) => (
             <div className="card mb-3" key={todo.id}>
               <div className="card-body d-flex justify-content-between align-items-center">
-                <p className="m-0">
+                <p
+                  className={`${todo.done ? "tachado m-0" : "m-0"} `}
+                  onClick={() => handleToggle(todo.id)}
+                >
                   {index + 1}. {todo.desc}
                 </p>
                 <button
