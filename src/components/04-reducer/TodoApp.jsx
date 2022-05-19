@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { todoReducer } from "./todoReducer";
 import useForm from "../../hooks/useForm";
 
@@ -18,10 +18,18 @@ const init = () => {
 
 const TodoApp = () => {
   const [todos, dispatch] = useReducer(todoReducer, [], init);
+
+  const [pendientes, setPendientes] = useState(todos);
+
   const [{ description }, handleInputChange, reset] = useForm({
     description: "",
   });
   // console.log(todos);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+    setPendientes(todos.filter((todo) => todo.done === false));
+  }, [todos]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,12 +60,22 @@ const TodoApp = () => {
     });
   };
 
+  const handleToggle = (todoId) => {
+    dispatch({
+      type: "toggle",
+      payload: todoId,
+    });
+  };
+
   return (
     <div className="container">
       <div className="row mt-5">
         <div className="col">
-          <h1>TodoApp (1)</h1>
+          <h1>TodoApp </h1>
           <hr />
+          <p>
+            Total: ({todos.length}) - pendientes: ({pendientes.length})
+          </p>
         </div>
       </div>
       <div className="row">
@@ -65,7 +83,10 @@ const TodoApp = () => {
           {todos.map((todo, index) => (
             <div className="card mb-3" key={todo.id}>
               <div className="card-body d-flex justify-content-between align-items-center">
-                <p className="m-0">
+                <p
+                  className={`${todo.done ? "tachado m-0" : "m-0"}`}
+                  onClick={() => handleToggle(todo.id)}
+                >
                   {index + 1}. {todo.desc}
                 </p>
                 <button
