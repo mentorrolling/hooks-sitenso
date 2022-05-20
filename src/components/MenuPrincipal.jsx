@@ -3,7 +3,9 @@ import { NavLink, Link } from "react-router-dom";
 import UserContext from "../context/Context";
 
 const MenuPrincipal = () => {
-  const { usuario } = useContext(UserContext);
+  const {
+    usuario: { cart },
+  } = useContext(UserContext);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -33,12 +35,17 @@ const MenuPrincipal = () => {
                 About
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/shop">
+                Shop
+              </NavLink>
+            </li>
           </ul>
           <ul className="navbar-nav mb-2 mb-lg-0">
             <li>
               <NavLink className="btn btn-primary" to="">
                 <i className="fa fa-shopping-cart me-1" aria-hidden="true"></i>{" "}
-                <span className="badge bg-danger">{usuario.cart.length}</span>
+                <span className="badge bg-danger">{cart.length}</span>
               </NavLink>
             </li>
           </ul>
