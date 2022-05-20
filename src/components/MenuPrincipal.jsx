@@ -31,6 +31,19 @@ const MenuPrincipal = () => {
                 About
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/shop">
+                Shop
+              </NavLink>
+            </li>
+          </ul>
+          <ul className="navbar-nav mb-2 mb-lg-0">
+            <li>
+              <button className="btn btn-primary" to="">
+                <i className="fa fa-shopping-cart me-1" aria-hidden="true"></i>{" "}
+                <span className="badge bg-danger">0</span>
+              </button>
+            </li>
           </ul>
         </div>
       </div>
